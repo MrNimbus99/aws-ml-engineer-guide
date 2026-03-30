@@ -37,8 +37,14 @@ a:hover { color: #06b6d4; border-bottom-color: #06b6d4; }
 .q-options { list-style: none; padding: 0; margin-bottom: 16px; }
 .q-options li { padding: 10px 14px; margin-bottom: 6px; border-radius: 8px; background: rgba(30, 40, 65, 0.6); border: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem; color: #9ba3b8; }
 .q-options li.correct { background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.3); color: #6ee7b7; }
-.q-explain { background: rgba(99, 102, 241, 0.08); border-left: 3px solid #6366f1; padding: 16px 20px; border-radius: 0 10px 10px 0; margin-top: 12px; }
-.q-explain p { font-size: 0.92rem; color: #a5b4fc; white-space: pre-line; }
+.q-explain { margin-top: 12px; }
+.q-explain-item { padding: 14px 18px; border-radius: 10px; margin-bottom: 10px; font-size: 0.92rem; line-height: 1.75; }
+.q-explain-item.correct-exp { background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; }
+.q-explain-item.correct-exp .exp-label { color: #6ee7b7; }
+.q-explain-item.wrong-exp { background: rgba(239, 68, 68, 0.06); border-left: 3px solid rgba(239, 68, 68, 0.4); }
+.q-explain-item.wrong-exp .exp-label { color: #fca5a5; }
+.exp-label { font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; display: block; }
+.exp-text { color: #b4bcd0; }
 details { cursor: pointer; }
 details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding: 8px 0; }
 .footer { margin-top: 60px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #6b7280; font-size: 0.9rem; }
@@ -98,11 +104,11 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: Kinesis Data Streams is designed for real-time streaming data ingestion with sub-second latency. Lambda can process records in near real-time as they arrive, meeting the 10,000 records/second throughput and sub-second latency requirements.
-- Why A is wrong: Amazon SQS is a message queue service designed for decoupling application components, not for high-throughput streaming ingestion. SQS standard queues have higher and less predictable latency compared to Kinesis Data Streams, and SQS does not natively support the ordered, high-throughput streaming patterns required here.
-- Why B is wrong: Batch uploads every minute introduce at least 60 seconds of latency, which far exceeds the sub-second requirement. S3 is object storage optimized for durability and cost, not real-time streaming ingestion.
-- Why C is correct: This is the correct answer.
-- Why D is wrong: AWS Glue streaming ETL jobs run on Apache Spark Structured Streaming, which introduces higher startup and per-micro-batch latency than Kinesis Data Streams with Lambda. Glue streaming is better suited for complex ETL transformations rather than low-latency ingestion.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">Kinesis Data Streams is designed for real-time streaming data ingestion with sub-second latency. Lambda can process records in near real-time as they arrive, meeting the 10,000 records/second throughput and sub-second latency requirements.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Amazon SQS is a message queue service designed for decoupling application components, not for high-throughput streaming ingestion. SQS standard queues have higher and less predictable latency compared to Kinesis Data Streams, and SQS does not natively support the ordered, high-throughput streaming patterns required here.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">Batch uploads every minute introduce at least 60 seconds of latency, which far exceeds the sub-second requirement. S3 is object storage optimized for durability and cost, not real-time streaming ingestion.</span></div>
+<div class="q-explain-item correct-exp"><span class="exp-label">✓ Why C is correct</span><span class="exp-text">This is the correct answer.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">AWS Glue streaming ETL jobs run on Apache Spark Structured Streaming, which introduces higher startup and per-micro-batch latency than Kinesis Data Streams with Lambda. Glue streaming is better suited for complex ETL transformations rather than low-latency ingestion.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -117,10 +123,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: Kinesis Data Streams with Lambda handles real-time streaming ingestion to the online store, while AWS Glue jobs efficiently process batch data for the offline store. Together they cover both real-time and batch ingestion patterns required for a complete Feature Store pipeline.
-- Why A is wrong: Configuring only the online store ignores the offline store, which is essential for batch training data access, time-travel queries, and historical feature retrieval. A production pipeline needs both stores.
-- Why D is wrong: Manual API calls do not scale for production workloads. Automated ingestion through managed services like Kinesis and Glue provides reliability, error handling, and the ability to handle high-throughput data.
-- Why E is wrong: DynamoDB is unnecessary as an intermediate layer because Feature Store's online store already uses DynamoDB-like infrastructure internally. Adding another DynamoDB table introduces extra cost, latency, and operational complexity with no benefit.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">Kinesis Data Streams with Lambda handles real-time streaming ingestion to the online store, while AWS Glue jobs efficiently process batch data for the offline store. Together they cover both real-time and batch ingestion patterns required for a complete Feature Store pipeline.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Configuring only the online store ignores the offline store, which is essential for batch training data access, time-travel queries, and historical feature retrieval. A production pipeline needs both stores.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Manual API calls do not scale for production workloads. Automated ingestion through managed services like Kinesis and Glue provides reliability, error handling, and the ability to handle high-throughput data.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why E is wrong</span><span class="exp-text">DynamoDB is unnecessary as an intermediate layer because Feature Store's online store already uses DynamoDB-like infrastructure internally. Adding another DynamoDB table introduces extra cost, latency, and operational complexity with no benefit.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -134,10 +140,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: SSE-KMS with a customer managed key (CMK) encrypts data at rest in S3 and allows the company to control and audit key usage through AWS KMS. Customer managed keys support automatic annual key rotation, meeting both encryption and key management requirements.
-- Why A is wrong: SSE-S3 uses Amazon-managed keys. The company cannot control or audit the keys, and SSE-S3 does not support customer-configurable key rotation policies. This does not satisfy the requirement for company-managed keys.
-- Why C is wrong: Client-side encryption with keys stored on a local server places the burden of key management, rotation, and availability entirely on the company's infrastructure. This increases operational overhead and risk compared to using AWS KMS, which provides built-in rotation, auditing, and high availability.
-- Why D is wrong: Disabling encryption and relying solely on S3 bucket policies does not encrypt data at rest. Bucket policies control access but do not protect data if the underlying storage is compromised. This violates the encryption-at-rest requirement.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">SSE-KMS with a customer managed key (CMK) encrypts data at rest in S3 and allows the company to control and audit key usage through AWS KMS. Customer managed keys support automatic annual key rotation, meeting both encryption and key management requirements.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">SSE-S3 uses Amazon-managed keys. The company cannot control or audit the keys, and SSE-S3 does not support customer-configurable key rotation policies. This does not satisfy the requirement for company-managed keys.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Client-side encryption with keys stored on a local server places the burden of key management, rotation, and availability entirely on the company's infrastructure. This increases operational overhead and risk compared to using AWS KMS, which provides built-in rotation, auditing, and high availability.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Disabling encryption and relying solely on S3 bucket policies does not encrypt data at rest. Bucket policies control access but do not protect data if the underlying storage is compromised. This violates the encryption-at-rest requirement.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -151,10 +157,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: Ground Truth with Mechanical Turk provides access to a large, cost-effective workforce for simple labeling tasks. Ground Truth also includes active learning to reduce labeling costs by using ML to auto-label high-confidence items.
-- Why B is wrong: A private workforce requires recruiting and managing your own workers. For straightforward labeling tasks that do not require specialized expertise, Mechanical Turk is more cost-effective and scales more easily to 100,000 images.
-- Why C is wrong: Hiring a dedicated team of data scientists for simple image labeling is expensive and wasteful. Data scientists' time is better spent on model development and analysis, not straightforward labeling that non-experts can perform.
-- Why D is wrong: The ML team's time is valuable for model development and experimentation. Outsourcing simple labeling to Mechanical Turk through Ground Truth is more cost-effective and lets the ML team focus on higher-value work.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">Ground Truth with Mechanical Turk provides access to a large, cost-effective workforce for simple labeling tasks. Ground Truth also includes active learning to reduce labeling costs by using ML to auto-label high-confidence items.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">A private workforce requires recruiting and managing your own workers. For straightforward labeling tasks that do not require specialized expertise, Mechanical Turk is more cost-effective and scales more easily to 100,000 images.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Hiring a dedicated team of data scientists for simple image labeling is expensive and wasteful. Data scientists' time is better spent on model development and analysis, not straightforward labeling that non-experts can perform.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">The ML team's time is valuable for model development and experimentation. Outsourcing simple labeling to Mechanical Turk through Ground Truth is more cost-effective and lets the ML team focus on higher-value work.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -170,13 +176,13 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: Amazon Textract is purpose-built for extracting text and structured data from scanned documents such as catalogs and invoices. Amazon Translate provides neural machine translation across 75+ languages, ideal for multilingual product descriptions. Amazon Transcribe performs automatic speech recognition (ASR) and can generate real-time subtitles from audio tracks. Each is a fully managed AI service requiring no ML expertise.
-- Why A (Textract) is correct: Textract specializes in document text extraction, including tables and forms — the right service for scanned catalogs.
-- Why B (Rekognition) is wrong: Rekognition is for image and video analysis such as object detection and facial recognition. While it has some text-in-image capability, Textract is the purpose-built service for document text extraction and structured data.
-- Why C (Translate) is correct: Amazon Translate provides fluent neural machine translation and is the right service for producing multilingual product descriptions.
-- Why D (Transcribe) is correct: Amazon Transcribe converts speech to text and supports real-time transcription, making it ideal for video subtitle generation.
-- Why E (Comprehend) is wrong: Comprehend performs NLP tasks like sentiment analysis and entity extraction on existing text. It does not convert speech to text — that is Transcribe's function.
-- Why F (BlazingText) is wrong: BlazingText is a SageMaker built-in algorithm for text classification and Word2Vec embeddings, not a translation service. Amazon Translate is the managed service for language translation.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">Amazon Textract is purpose-built for extracting text and structured data from scanned documents such as catalogs and invoices. Amazon Translate provides neural machine translation across 75+ languages, ideal for multilingual product descriptions. Amazon Transcribe performs automatic speech recognition (ASR) and can generate real-time subtitles from audio tracks. Each is a fully managed AI service requiring no ML expertise.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A (Textract) is correct</span><span class="exp-text">Textract specializes in document text extraction, including tables and forms — the right service for scanned catalogs.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B (Rekognition) is wrong</span><span class="exp-text">Rekognition is for image and video analysis such as object detection and facial recognition. While it has some text-in-image capability, Textract is the purpose-built service for document text extraction and structured data.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C (Translate) is correct</span><span class="exp-text">Amazon Translate provides fluent neural machine translation and is the right service for producing multilingual product descriptions.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D (Transcribe) is correct</span><span class="exp-text">Amazon Transcribe converts speech to text and supports real-time transcription, making it ideal for video subtitle generation.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why E (Comprehend) is wrong</span><span class="exp-text">Comprehend performs NLP tasks like sentiment analysis and entity extraction on existing text. It does not convert speech to text — that is Transcribe's function.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why F (BlazingText) is wrong</span><span class="exp-text">BlazingText is a SageMaker built-in algorithm for text classification and Word2Vec embeddings, not a translation service. Amazon Translate is the managed service for language translation.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -190,10 +196,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: GPU utilization of only 30% with batch size 16 indicates the GPU is underutilized. Increasing the batch size to 128 better saturates the GPU's parallel processing capacity, improving utilization and reducing wall-clock time per epoch. When scaling batch size up, it is a best practice to proportionally increase the learning rate (linear scaling rule) to maintain similar convergence dynamics.
-- Why A is wrong: Decreasing the batch size to 8 would further underutilize the GPU, increasing the number of gradient updates per epoch and making each epoch even slower.
-- Why B is wrong: Switching to a CPU instance would drastically slow down CNN training. The problem is GPU underutilization, not a GPU memory issue.
-- Why D is wrong: Reducing epochs to 1 may result in a severely undertrained model. The goal is to speed up each epoch, not to cut training short.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">GPU utilization of only 30% with batch size 16 indicates the GPU is underutilized. Increasing the batch size to 128 better saturates the GPU's parallel processing capacity, improving utilization and reducing wall-clock time per epoch. When scaling batch size up, it is a best practice to proportionally increase the learning rate (linear scaling rule) to maintain similar convergence dynamics.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Decreasing the batch size to 8 would further underutilize the GPU, increasing the number of gradient updates per epoch and making each epoch even slower.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">Switching to a CPU instance would drastically slow down CNN training. The problem is GPU underutilization, not a GPU memory issue.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Reducing epochs to 1 may result in a severely undertrained model. The goal is to speed up each epoch, not to cut training short.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -207,10 +213,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: The confusion matrix shows that the model has high false negatives for the minority class (low recall). Lowering the classification threshold means the model needs less confidence to predict the minority class, which increases recall at the cost of some precision. This is the correct trade-off when missing minority-class predictions is costly (e.g., fraud detection, medical diagnosis).
-- Why A is wrong: Increasing the threshold would make the model even more conservative, further reducing recall for the minority class. This would worsen the false negative problem.
-- Why C is wrong: The learning rate is a training hyperparameter that affects optimization convergence, not the decision threshold at inference time. Changing it does not directly address the recall issue shown in the confusion matrix.
-- Why D is wrong: Removing the minority class eliminates the ability to detect it entirely. The goal is to improve detection of the minority class, not ignore it.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">The confusion matrix shows that the model has high false negatives for the minority class (low recall). Lowering the classification threshold means the model needs less confidence to predict the minority class, which increases recall at the cost of some precision. This is the correct trade-off when missing minority-class predictions is costly (e.g., fraud detection, medical diagnosis).</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Increasing the threshold would make the model even more conservative, further reducing recall for the minority class. This would worsen the false negative problem.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">The learning rate is a training hyperparameter that affects optimization convergence, not the decision threshold at inference time. Changing it does not directly address the recall issue shown in the confusion matrix.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Removing the minority class eliminates the ability to detect it entirely. The goal is to improve detection of the minority class, not ignore it.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -225,11 +231,11 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why C is correct: Amazon Bedrock provides fully managed access to foundation models from providers such as Anthropic, Meta, and Amazon. Teams can use these models for text generation, summarization, and other tasks without training from scratch.
-- Why E is correct: SageMaker JumpStart offers a hub of pre-trained models and solution templates that can be fine-tuned on custom data or deployed directly, significantly reducing development time.
-- Why A is wrong: SageMaker Data Wrangler is a data preparation and transformation tool. It does not provide pre-trained models.
-- Why B is wrong: SageMaker Feature Store is used to store, share, and manage ML features. It does not offer pre-trained models.
-- Why D is wrong: SageMaker Clarify provides model explainability and bias detection capabilities. It is not a source of pre-trained models.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why C is correct</span><span class="exp-text">Amazon Bedrock provides fully managed access to foundation models from providers such as Anthropic, Meta, and Amazon. Teams can use these models for text generation, summarization, and other tasks without training from scratch.</span></div>
+<div class="q-explain-item correct-exp"><span class="exp-label">✓ Why E is correct</span><span class="exp-text">SageMaker JumpStart offers a hub of pre-trained models and solution templates that can be fine-tuned on custom data or deployed directly, significantly reducing development time.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">SageMaker Data Wrangler is a data preparation and transformation tool. It does not provide pre-trained models.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">SageMaker Feature Store is used to store, share, and manage ML features. It does not offer pre-trained models.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">SageMaker Clarify provides model explainability and bias detection capabilities. It is not a source of pre-trained models.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -244,11 +250,11 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why B is correct: AWS Lambda with container image support (up to 10 GB image size) can host the 200 MB model easily. Lambda scales to zero automatically during idle periods, so the team pays nothing when there are no requests. Lambda responds synchronously and can return predictions well within the 10-second requirement for a lightweight model, even accounting for cold starts.
-- Why C is correct: SageMaker serverless inference automatically scales down to zero during idle periods, eliminating costs when there is no traffic. It responds synchronously and is purpose-built for sporadic, unpredictable ML inference workloads. Cold-start latency of a few seconds is acceptable within the 10-second budget for a 200 MB model.
-- Why A is wrong: A real-time endpoint with a provisioned instance runs continuously and incurs costs 24/7, even during idle periods. This does not minimize costs for sporadic traffic.
-- Why D is wrong: SageMaker asynchronous inference does not return predictions synchronously. It accepts the request and returns a response token immediately, but the actual prediction is written to S3 and the caller is notified later via SNS or polling. This does not meet the requirement for a synchronous response within 10 seconds.
-- Why E is wrong: Batch transform is designed for offline processing of large datasets stored in S3, not for on-demand synchronous inference. It does not provide request-response predictions to individual callers.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why B is correct</span><span class="exp-text">AWS Lambda with container image support (up to 10 GB image size) can host the 200 MB model easily. Lambda scales to zero automatically during idle periods, so the team pays nothing when there are no requests. Lambda responds synchronously and can return predictions well within the 10-second requirement for a lightweight model, even accounting for cold starts.</span></div>
+<div class="q-explain-item correct-exp"><span class="exp-label">✓ Why C is correct</span><span class="exp-text">SageMaker serverless inference automatically scales down to zero during idle periods, eliminating costs when there is no traffic. It responds synchronously and is purpose-built for sporadic, unpredictable ML inference workloads. Cold-start latency of a few seconds is acceptable within the 10-second budget for a 200 MB model.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">A real-time endpoint with a provisioned instance runs continuously and incurs costs 24/7, even during idle periods. This does not minimize costs for sporadic traffic.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">SageMaker asynchronous inference does not return predictions synchronously. It accepts the request and returns a response token immediately, but the actual prediction is written to S3 and the caller is notified later via SNS or polling. This does not meet the requirement for a synchronous response within 10 seconds.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why E is wrong</span><span class="exp-text">Batch transform is designed for offline processing of large datasets stored in S3, not for on-demand synchronous inference. It does not provide request-response predictions to individual callers.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -263,10 +269,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: To enable auto scaling on a SageMaker endpoint, you must first register the endpoint variant as a scalable target with Application Auto Scaling (E), and then define a target tracking scaling policy using a metric such as InvocationsPerInstance (B). The target tracking policy automatically adjusts the number of instances to keep the metric close to the target value, handling variable traffic without manual intervention.
-- Why A is wrong: Manually adding and removing instances is operationally burdensome and error-prone. Auto scaling automates this process based on actual demand.
-- Why C is wrong: Scaling vertically (larger instance) does not handle traffic variability and creates a single point of failure. Horizontal scaling with auto scaling is the recommended approach.
-- Why D is wrong: Sizing for peak load wastes resources during low-traffic periods. Auto scaling adjusts capacity dynamically, improving cost efficiency.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">To enable auto scaling on a SageMaker endpoint, you must first register the endpoint variant as a scalable target with Application Auto Scaling (E), and then define a target tracking scaling policy using a metric such as InvocationsPerInstance (B). The target tracking policy automatically adjusts the number of instances to keep the metric close to the target value, handling variable traffic without manual intervention.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Manually adding and removing instances is operationally burdensome and error-prone. Auto scaling automates this process based on actual demand.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Scaling vertically (larger instance) does not handle traffic variability and creates a single point of failure. Horizontal scaling with auto scaling is the recommended approach.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Sizing for peak load wastes resources during low-traffic periods. Auto scaling adjusts capacity dynamically, improving cost efficiency.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -280,10 +286,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: AWS CodePipeline orchestrates the end-to-end workflow by linking source, build, and deploy stages. CodeBuild handles building the Docker container and running unit tests (defined in a buildspec.yml). CodeDeploy (integrated with SageMaker) manages the deployment to SageMaker endpoints with traffic shifting. Together, these three services create a fully automated CI/CD pipeline triggered by code changes.
-- Why A is wrong: SageMaker Pipelines is designed for ML workflow orchestration (training, processing, evaluation steps), not for CI/CD tasks like building Docker containers and running unit tests on application code. It lacks native integration with source control triggers for code pushes.
-- Why C is wrong: While Step Functions can orchestrate workflows, it requires significantly more custom configuration for CI/CD tasks compared to CodePipeline. It does not natively integrate with source repositories as a trigger or provide built-in build environments like CodeBuild.
-- Why D is wrong: Lambda functions could theoretically orchestrate parts of this workflow, but this approach requires writing and maintaining custom orchestration logic. CodePipeline provides this orchestration out of the box with built-in integrations for source, build, and deploy stages.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">AWS CodePipeline orchestrates the end-to-end workflow by linking source, build, and deploy stages. CodeBuild handles building the Docker container and running unit tests (defined in a buildspec.yml). CodeDeploy (integrated with SageMaker) manages the deployment to SageMaker endpoints with traffic shifting. Together, these three services create a fully automated CI/CD pipeline triggered by code changes.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">SageMaker Pipelines is designed for ML workflow orchestration (training, processing, evaluation steps), not for CI/CD tasks like building Docker containers and running unit tests on application code. It lacks native integration with source control triggers for code pushes.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">While Step Functions can orchestrate workflows, it requires significantly more custom configuration for CI/CD tasks compared to CodePipeline. It does not natively integrate with source repositories as a trigger or provide built-in build environments like CodeBuild.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Lambda functions could theoretically orchestrate parts of this workflow, but this approach requires writing and maintaining custom orchestration logic. CodePipeline provides this orchestration out of the box with built-in integrations for source, build, and deploy stages.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -297,10 +303,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: SageMaker Serverless Inference scales to zero when there is no traffic, so the company pays nothing during overnight idle hours. It automatically provisions compute when requests arrive. The 2-second latency tolerance accommodates cold-start latency inherent in serverless endpoints, making this the most cost-effective option for sporadic traffic patterns.
-- Why A is wrong: A real-time endpoint with a minimum instance count of 2 keeps instances running 24/7, incurring costs even during overnight hours with zero traffic. This is not cost-optimized for sporadic workloads.
-- Why C is wrong: Asynchronous inference is designed for requests with large payloads or long processing times (minutes), where the caller does not need an immediate response. It queues requests via Amazon S3 and is not suitable for synchronous API-style inference.
-- Why D is wrong: Batch Transform processes an entire dataset offline in a single job. It cannot serve on-demand API requests and is designed for bulk inference, not real-time or near-real-time use cases.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">SageMaker Serverless Inference scales to zero when there is no traffic, so the company pays nothing during overnight idle hours. It automatically provisions compute when requests arrive. The 2-second latency tolerance accommodates cold-start latency inherent in serverless endpoints, making this the most cost-effective option for sporadic traffic patterns.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">A real-time endpoint with a minimum instance count of 2 keeps instances running 24/7, incurring costs even during overnight hours with zero traffic. This is not cost-optimized for sporadic workloads.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Asynchronous inference is designed for requests with large payloads or long processing times (minutes), where the caller does not need an immediate response. It queues requests via Amazon S3 and is not suitable for synchronous API-style inference.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Batch Transform processes an entire dataset offline in a single job. It cannot serve on-demand API requests and is designed for bulk inference, not real-time or near-real-time use cases.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -314,10 +320,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: SageMaker Model Monitor compares incoming inference data against a baseline computed from training data. It uses statistical tests (e.g., KL divergence, L-infinity distance for numerical features) to detect distribution shifts in input features. When drift is detected, it generates constraint violation reports and can trigger CloudWatch alarms. This directly addresses detecting data changes causing accuracy decline.
-- Why B is wrong: SageMaker Debugger is designed for debugging model training issues (vanishing gradients, overfitting) by capturing tensors during training, not for monitoring production inference data drift.
-- Why C is wrong: SageMaker Autopilot automates model building and training but does not monitor production endpoints for data drift. The team first needs to detect the problem before deciding to retrain.
-- Why D is wrong: Manually reviewing CloudWatch Logs does not scale and does not provide statistical analysis of data distribution changes. Model Monitor automates this detection with statistical methods.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">SageMaker Model Monitor compares incoming inference data against a baseline computed from training data. It uses statistical tests (e.g., KL divergence, L-infinity distance for numerical features) to detect distribution shifts in input features. When drift is detected, it generates constraint violation reports and can trigger CloudWatch alarms. This directly addresses detecting data changes causing accuracy decline.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">SageMaker Debugger is designed for debugging model training issues (vanishing gradients, overfitting) by capturing tensors during training, not for monitoring production inference data drift.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">SageMaker Autopilot automates model building and training but does not monitor production endpoints for data drift. The team first needs to detect the problem before deciding to retrain.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Manually reviewing CloudWatch Logs does not scale and does not provide statistical analysis of data distribution changes. Model Monitor automates this detection with statistical methods.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -331,10 +337,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct (C): SageMaker endpoints automatically publish the ModelLatency metric to Amazon CloudWatch. A CloudWatch alarm can be configured directly on this metric with a static threshold of 500 ms and an evaluation period of 5 consecutive datapoints (minutes). When breached, the alarm can trigger an SNS notification. This is fully managed and requires no custom code.
-- Why A is wrong: Writing a custom Lambda polling function adds unnecessary operational overhead (code maintenance, scheduling, error handling). CloudWatch alarms already provide this capability natively with zero custom code.
-- Why B is wrong: Amazon EventBridge captures SageMaker API events (e.g., CreateEndpoint, UpdateEndpoint) but does not capture individual invocation-level latency metrics. Invocation latency is tracked through CloudWatch metrics, not EventBridge events.
-- Why D is wrong: AWS X-Ray provides distributed tracing for analyzing latency breakdowns, but X-Ray itself does not have built-in alerting capabilities. You would still need CloudWatch alarms to trigger notifications based on latency thresholds.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct (C)</span><span class="exp-text">SageMaker endpoints automatically publish the ModelLatency metric to Amazon CloudWatch. A CloudWatch alarm can be configured directly on this metric with a static threshold of 500 ms and an evaluation period of 5 consecutive datapoints (minutes). When breached, the alarm can trigger an SNS notification. This is fully managed and requires no custom code.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Writing a custom Lambda polling function adds unnecessary operational overhead (code maintenance, scheduling, error handling). CloudWatch alarms already provide this capability natively with zero custom code.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">Amazon EventBridge captures SageMaker API events (e.g., CreateEndpoint, UpdateEndpoint) but does not capture individual invocation-level latency metrics. Invocation latency is tracked through CloudWatch metrics, not EventBridge events.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">AWS X-Ray provides distributed tracing for analyzing latency breakdowns, but X-Ray itself does not have built-in alerting capabilities. You would still need CloudWatch alarms to trigger notifications based on latency thresholds.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -348,10 +354,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct (B): A custom IAM policy scoped to specific S3 prefixes grants only the permissions the training job actually needs — s3:GetObject for reading training data and s3:PutObject for writing model artifacts. This is the definition of least privilege: no excess access to other buckets, prefixes, or S3 operations.
-- Why A is wrong: AdministratorAccess grants full access to all AWS services and resources, which massively violates least privilege. A compromised training job could modify IAM, delete resources, or access unrelated data.
-- Why C is wrong: AmazonS3FullAccess grants read/write/delete on every S3 bucket in the account, far exceeding what the training job needs. It also includes s3:DeleteObject, which is unnecessary and risky.
-- Why D is wrong: Embedding long-term access keys in code is a serious security anti-pattern. SageMaker execution roles provide temporary credentials via IAM roles, eliminating the need for static keys. Hard-coded keys can be leaked through logs, version control, or container images.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct (B)</span><span class="exp-text">A custom IAM policy scoped to specific S3 prefixes grants only the permissions the training job actually needs — s3:GetObject for reading training data and s3:PutObject for writing model artifacts. This is the definition of least privilege: no excess access to other buckets, prefixes, or S3 operations.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">AdministratorAccess grants full access to all AWS services and resources, which massively violates least privilege. A compromised training job could modify IAM, delete resources, or access unrelated data.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">AmazonS3FullAccess grants read/write/delete on every S3 bucket in the account, far exceeding what the training job needs. It also includes s3:DeleteObject, which is unnecessary and risky.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Embedding long-term access keys in code is a serious security anti-pattern. SageMaker execution roles provide temporary credentials via IAM roles, eliminating the need for static keys. Hard-coded keys can be leaked through logs, version control, or container images.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -365,10 +371,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: SageMaker Model Monitor lets you create a baseline from training data and then continuously compare incoming inference data against that baseline. It automatically detects statistical deviations (data drift, model quality drift) and can trigger CloudWatch alarms when thresholds are breached, enabling proactive remediation.
-- Why A is wrong: Retraining on a fixed schedule wastes resources if no drift has occurred and may miss drift that happens between scheduled retrains. Monitoring should drive retraining decisions, not arbitrary schedules.
-- Why C is wrong: Manual visual inspection does not scale, is error-prone, and cannot detect subtle statistical shifts across thousands of features or predictions.
-- Why D is wrong: Deploying a second identical model endpoint just duplicates the same model. It does not detect drift because both endpoints would exhibit the same behavior on changed data.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">SageMaker Model Monitor lets you create a baseline from training data and then continuously compare incoming inference data against that baseline. It automatically detects statistical deviations (data drift, model quality drift) and can trigger CloudWatch alarms when thresholds are breached, enabling proactive remediation.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Retraining on a fixed schedule wastes resources if no drift has occurred and may miss drift that happens between scheduled retrains. Monitoring should drive retraining decisions, not arbitrary schedules.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Manual visual inspection does not scale, is error-prone, and cannot detect subtle statistical shifts across thousands of features or predictions.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Deploying a second identical model endpoint just duplicates the same model. It does not detect drift because both endpoints would exhibit the same behavior on changed data.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -382,10 +388,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: SageMaker BYOC containers can publish custom CloudWatch metrics (such as queue depth) from within the container. Application Auto Scaling supports target tracking and step scaling policies based on any CloudWatch metric, including custom ones. This allows scaling based on application-specific indicators like queued requests rather than generic resource metrics.
-- Why A is wrong: SageMakerVariantInvocationsPerInterval tracks the total number of invocations sent to the endpoint variant per interval. While useful for scaling based on request volume, it does not directly measure the queue depth of requests waiting inside the container to be processed.
-- Why B is wrong: CPUUtilization measures compute resource usage, not application-level queue depth. High CPU does not necessarily correlate with queued requests, and low CPU does not mean the queue is empty—for example, I/O-bound models may queue requests without spiking CPU.
-- Why D is wrong: Manual scaling cannot respond to real-time traffic fluctuations. It introduces latency in scaling decisions and requires constant human intervention, making it impractical for variable traffic patterns.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">SageMaker BYOC containers can publish custom CloudWatch metrics (such as queue depth) from within the container. Application Auto Scaling supports target tracking and step scaling policies based on any CloudWatch metric, including custom ones. This allows scaling based on application-specific indicators like queued requests rather than generic resource metrics.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">SageMakerVariantInvocationsPerInterval tracks the total number of invocations sent to the endpoint variant per interval. While useful for scaling based on request volume, it does not directly measure the queue depth of requests waiting inside the container to be processed.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">CPUUtilization measures compute resource usage, not application-level queue depth. High CPU does not necessarily correlate with queued requests, and low CPU does not mean the queue is empty—for example, I/O-bound models may queue requests without spiking CPU.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Manual scaling cannot respond to real-time traffic fluctuations. It introduces latency in scaling decisions and requires constant human intervention, making it impractical for variable traffic patterns.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -399,10 +405,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: AWS Glue Crawlers automatically discover schemas from S3 data and register them in the AWS Glue Data Catalog. Glue ETL jobs can then convert CSVs to Parquet (columnar format). The entire workflow is serverless — no clusters to manage — and the Data Catalog serves as the central metadata repository that other services (Athena, Redshift Spectrum, EMR) can query.
-- Why A is wrong: Amazon EMR with Hive can perform schema discovery and format conversion, but it requires provisioning and managing clusters, which adds operational overhead. The question specifically asks for a serverless solution with minimal operational overhead.
-- Why C is wrong: Amazon Athena can query CSV files and use CTAS (CREATE TABLE AS SELECT) to convert to Parquet, but Athena is a query service — it does not automatically crawl and discover schemas from new vendor files. You would still need Glue Crawlers or manual DDL for schema discovery.
-- Why D is wrong: Amazon Kinesis Data Firehose is designed for streaming data ingestion and can convert to Parquet, but it is not suited for batch processing of daily CSV file drops already in S3. It is optimized for real-time data streams, not batch file transformations.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">AWS Glue Crawlers automatically discover schemas from S3 data and register them in the AWS Glue Data Catalog. Glue ETL jobs can then convert CSVs to Parquet (columnar format). The entire workflow is serverless — no clusters to manage — and the Data Catalog serves as the central metadata repository that other services (Athena, Redshift Spectrum, EMR) can query.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Amazon EMR with Hive can perform schema discovery and format conversion, but it requires provisioning and managing clusters, which adds operational overhead. The question specifically asks for a serverless solution with minimal operational overhead.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Amazon Athena can query CSV files and use CTAS (CREATE TABLE AS SELECT) to convert to Parquet, but Athena is a query service — it does not automatically crawl and discover schemas from new vendor files. You would still need Glue Crawlers or manual DDL for schema discovery.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Amazon Kinesis Data Firehose is designed for streaming data ingestion and can convert to Parquet, but it is not suited for batch processing of daily CSV file drops already in S3. It is optimized for real-time data streams, not batch file transformations.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -416,10 +422,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: P5 instances (p5.48xlarge) are powered by NVIDIA H100 GPUs with 80 GB HBM3 memory per GPU and 3200 Gbps EFA networking. They provide the highest GPU performance and inter-node bandwidth available, making them ideal for training very large models where performance is the priority over cost.
-- Why A is wrong: G5 instances use NVIDIA A10G GPUs, which are designed primarily for graphics-intensive applications and ML inference, not large-scale model training. They have lower GPU memory (24 GB per GPU) and less inter-node bandwidth than P5 instances.
-- Why C is wrong: Inf2 instances are powered by AWS Inferentia2 chips, which are purpose-built for ML inference workloads, not training. They cannot be used to train models.
-- Why D is wrong: Trn1 instances (AWS Trainium) offer excellent price-performance for training and would be a strong choice if cost were the primary concern. However, P5 with H100 GPUs provides the highest raw performance and broader framework compatibility when the deadline is tight and cost is secondary.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">P5 instances (p5.48xlarge) are powered by NVIDIA H100 GPUs with 80 GB HBM3 memory per GPU and 3200 Gbps EFA networking. They provide the highest GPU performance and inter-node bandwidth available, making them ideal for training very large models where performance is the priority over cost.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">G5 instances use NVIDIA A10G GPUs, which are designed primarily for graphics-intensive applications and ML inference, not large-scale model training. They have lower GPU memory (24 GB per GPU) and less inter-node bandwidth than P5 instances.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Inf2 instances are powered by AWS Inferentia2 chips, which are purpose-built for ML inference workloads, not training. They cannot be used to train models.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Trn1 instances (AWS Trainium) offer excellent price-performance for training and would be a strong choice if cost were the primary concern. However, P5 with H100 GPUs provides the highest raw performance and broader framework compatibility when the deadline is tight and cost is secondary.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -433,10 +439,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct (C): Amazon Athena is a serverless interactive query service that lets you run standard SQL queries directly against data stored in Amazon S3. There is no infrastructure to provision or manage, and you pay only per query based on the amount of data scanned. This makes it ideal for exploratory analysis on large datasets stored in S3.
-- Why A is wrong: Copying 50 TB into Amazon Redshift requires provisioning a cluster, managing storage, and paying for compute even when queries are idle. This adds significant cost and operational overhead for exploratory queries.
-- Why B is wrong: Amazon S3 Select filters data within individual S3 objects (e.g., retrieving specific columns from a single CSV or Parquet file). It cannot run SQL queries across multiple objects or perform joins, aggregations, or complex analytics across the full 50 TB dataset.
-- Why D is wrong: Amazon RDS is a relational database service designed for transactional workloads, not large-scale analytics on 50 TB of data. Loading this volume into RDS would be impractical, expensive, and slow for analytical queries.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct (C)</span><span class="exp-text">Amazon Athena is a serverless interactive query service that lets you run standard SQL queries directly against data stored in Amazon S3. There is no infrastructure to provision or manage, and you pay only per query based on the amount of data scanned. This makes it ideal for exploratory analysis on large datasets stored in S3.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Copying 50 TB into Amazon Redshift requires provisioning a cluster, managing storage, and paying for compute even when queries are idle. This adds significant cost and operational overhead for exploratory queries.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">Amazon S3 Select filters data within individual S3 objects (e.g., retrieving specific columns from a single CSV or Parquet file). It cannot run SQL queries across multiple objects or perform joins, aggregations, or complex analytics across the full 50 TB dataset.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Amazon RDS is a relational database service designed for transactional workloads, not large-scale analytics on 50 TB of data. Loading this volume into RDS would be impractical, expensive, and slow for analytical queries.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -450,10 +456,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: AWS Step Functions provides visual workflow orchestration with native support for conditional branching via Choice states, error handling with Retry/Catch, and direct AWS SDK integrations with SageMaker, Glue, and other services. It can call SageMaker CreateTrainingJob, wait for completion, evaluate results, and use a Choice state to skip deployment if metrics are below threshold—all without custom glue code.
-- Why A is wrong: Amazon SQS is a message queuing service for decoupling producers and consumers. It does not provide workflow orchestration, conditional branching, or state management needed for a multi-step ML pipeline.
-- Why C is wrong: Amazon EventBridge routes events based on rules, but it is not designed for multi-step orchestration with conditional logic, state tracking, or sequential dependencies between pipeline stages.
-- Why D is wrong: Amazon SNS is a publish/subscribe notification service. It can fan out messages to subscribers but does not support conditional branching, sequential step execution, or workflow state management.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">AWS Step Functions provides visual workflow orchestration with native support for conditional branching via Choice states, error handling with Retry/Catch, and direct AWS SDK integrations with SageMaker, Glue, and other services. It can call SageMaker CreateTrainingJob, wait for completion, evaluate results, and use a Choice state to skip deployment if metrics are below threshold—all without custom glue code.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Amazon SQS is a message queuing service for decoupling producers and consumers. It does not provide workflow orchestration, conditional branching, or state management needed for a multi-step ML pipeline.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Amazon EventBridge routes events based on rules, but it is not designed for multi-step orchestration with conditional logic, state tracking, or sequential dependencies between pipeline stages.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Amazon SNS is a publish/subscribe notification service. It can fan out messages to subscribers but does not support conditional branching, sequential step execution, or workflow state management.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -468,10 +474,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: A test stage running integration tests validates the model works correctly on a staging endpoint with real-world-like requests, catching issues before production. A manual approval action provides human oversight, allowing a reviewer to inspect evaluation metrics (accuracy, latency, bias) and make a go/no-go decision. Together, these ensure both automated and human quality gates.
-- Why A is wrong: ML training code (Python) is interpreted, not compiled into a binary. CodeBuild is used for running tests, building containers, or packaging artifacts—not compiling Python into executables.
-- Why C is wrong: Deploying directly to production without validation defeats the purpose of a CI/CD quality gate. This creates risk of deploying a degraded model.
-- Why E is wrong: Monitoring S3 for README changes has no relevance to model quality validation. Source stages should watch for meaningful artifact changes like new model packages.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">A test stage running integration tests validates the model works correctly on a staging endpoint with real-world-like requests, catching issues before production. A manual approval action provides human oversight, allowing a reviewer to inspect evaluation metrics (accuracy, latency, bias) and make a go/no-go decision. Together, these ensure both automated and human quality gates.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">ML training code (Python) is interpreted, not compiled into a binary. CodeBuild is used for running tests, building containers, or packaging artifacts—not compiling Python into executables.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Deploying directly to production without validation defeats the purpose of a CI/CD quality gate. This creates risk of deploying a degraded model.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why E is wrong</span><span class="exp-text">Monitoring S3 for README changes has no relevance to model quality validation. Source stages should watch for meaningful artifact changes like new model packages.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -485,11 +491,11 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: The InvocationsPerInstance CloudWatch metric shows the number of invocations sent to each instance hosting the endpoint. A rising value approaching or exceeding the instance's processing capacity indicates the endpoint needs to scale out. This is the most direct indicator of per-instance throughput pressure.
-- Why A is wrong: OverheadLatency measures the time SageMaker adds beyond model processing (e.g., request routing). While useful for diagnosing SageMaker-side overhead, it does not directly indicate whether the endpoint has sufficient throughput capacity to handle the volume of requests.
-- Why B is wrong: ModelLatency measures the time the model container takes to process a single inference request. High ModelLatency indicates a slow model, but does not tell you whether the endpoint has enough instances to handle the total request volume.
-- Why C is wrong: CPUUtilization shows how much processing power each instance is using. While high CPU can correlate with capacity issues, it does not directly measure request throughput. An endpoint could have low CPU but still drop requests if the invocation queue is saturated.
-- Why D is wrong: InvocationsPerInstance directly measures request volume per instance, making it the best first metric to assess whether throughput capacity is sufficient for the current traffic load.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">The InvocationsPerInstance CloudWatch metric shows the number of invocations sent to each instance hosting the endpoint. A rising value approaching or exceeding the instance's processing capacity indicates the endpoint needs to scale out. This is the most direct indicator of per-instance throughput pressure.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">OverheadLatency measures the time SageMaker adds beyond model processing (e.g., request routing). While useful for diagnosing SageMaker-side overhead, it does not directly indicate whether the endpoint has sufficient throughput capacity to handle the volume of requests.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">ModelLatency measures the time the model container takes to process a single inference request. High ModelLatency indicates a slow model, but does not tell you whether the endpoint has enough instances to handle the total request volume.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">CPUUtilization shows how much processing power each instance is using. While high CPU can correlate with capacity issues, it does not directly measure request throughput. An endpoint could have low CPU but still drop requests if the invocation queue is saturated.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">InvocationsPerInstance directly measures request volume per instance, making it the best first metric to assess whether throughput capacity is sufficient for the current traffic load.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -503,10 +509,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: An IAM execution role attached to the SageMaker training job is the recommended approach. The role should follow least-privilege by granting only the specific S3 and CloudWatch permissions needed. SageMaker assumes this role at runtime, so no long-term credentials are embedded in the code.
-- Why A is wrong: Embedding AWS access keys in the training script is a serious security anti-pattern. Hard-coded credentials can be leaked through logs, source control, or container images, and they do not rotate automatically.
-- Why C is wrong: A single administrator-level role violates the principle of least privilege. While it would technically work, granting broad permissions increases the blast radius if the role is compromised. Each job should have only the permissions it needs.
-- Why D is wrong: S3 bucket policies alone control access to S3 but cannot grant CloudWatch permissions. SageMaker training jobs still require an execution role to assume, and bucket policies are resource-based policies that complement—but do not replace—the identity-based permissions from an IAM role.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">An IAM execution role attached to the SageMaker training job is the recommended approach. The role should follow least-privilege by granting only the specific S3 and CloudWatch permissions needed. SageMaker assumes this role at runtime, so no long-term credentials are embedded in the code.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Embedding AWS access keys in the training script is a serious security anti-pattern. Hard-coded credentials can be leaked through logs, source control, or container images, and they do not rotate automatically.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">A single administrator-level role violates the principle of least privilege. While it would technically work, granting broad permissions increases the blast radius if the role is compromised. Each job should have only the permissions it needs.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">S3 bucket policies alone control access to S3 but cannot grant CloudWatch permissions. SageMaker training jobs still require an execution role to assume, and bucket policies are resource-based policies that complement—but do not replace—the identity-based permissions from an IAM role.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -520,10 +526,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: S3 is accessed through a VPC Gateway Endpoint, which routes traffic over the AWS private network without requiring a NAT gateway or internet gateway. Gateway endpoints are free, support S3 and DynamoDB, and are configured via route table entries. This keeps training data transfers private and avoids NAT gateway data processing charges, which can be substantial for large ML datasets.
-- Why A is wrong: An Interface Endpoint (AWS PrivateLink) creates an ENI in the subnet and is used for most AWS services, but S3 supports Gateway Endpoints, which are more cost-effective since they have no hourly or per-GB charge. Interface endpoints for S3 exist but are typically used when access is needed from on-premises via VPN/Direct Connect.
-- Why C is wrong: A NAT gateway would allow the SageMaker training instance to reach S3 over the internet, but this incurs NAT gateway data processing charges ($0.045/GB) which add up quickly with large ML datasets. A Gateway Endpoint is free and keeps traffic on the AWS backbone.
-- Why D is wrong: An internet gateway alone does not help instances in a private subnet, since private subnets do not have routes to the internet gateway. Moving instances to a public subnet would sacrifice network isolation, which defeats the purpose of VPC deployment.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">S3 is accessed through a VPC Gateway Endpoint, which routes traffic over the AWS private network without requiring a NAT gateway or internet gateway. Gateway endpoints are free, support S3 and DynamoDB, and are configured via route table entries. This keeps training data transfers private and avoids NAT gateway data processing charges, which can be substantial for large ML datasets.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">An Interface Endpoint (AWS PrivateLink) creates an ENI in the subnet and is used for most AWS services, but S3 supports Gateway Endpoints, which are more cost-effective since they have no hourly or per-GB charge. Interface endpoints for S3 exist but are typically used when access is needed from on-premises via VPN/Direct Connect.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">A NAT gateway would allow the SageMaker training instance to reach S3 over the internet, but this incurs NAT gateway data processing charges ($0.045/GB) which add up quickly with large ML datasets. A Gateway Endpoint is free and keeps traffic on the AWS backbone.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">An internet gateway alone does not help instances in a private subnet, since private subnets do not have routes to the internet gateway. Moving instances to a public subnet would sacrifice network isolation, which defeats the purpose of VPC deployment.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -538,11 +544,11 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct: AWS DataSync is purpose-built for automated, incremental data transfer between on-premises NFS storage and Amazon S3. It supports scheduled tasks that transfer only changed data, uses parallelism and network optimizations to maximize throughput over Direct Connect or internet, handles encryption in transit, and integrates natively with NFS. This makes it ideal for keeping an S3-based ML data lake synchronized with on-premises storage.
-- Why A is wrong: Snowmobile is designed for exabyte-scale one-time migrations (up to 100 PB per truck). It is massive overkill for 5 TB of weekly incremental data and introduces days of logistics latency per transfer.
-- Why C is wrong: A custom S3 PutObject script lacks built-in incremental detection, parallel transfer optimization, bandwidth throttling, automatic retry, and data integrity verification that DataSync provides out of the box. It also increases operational burden.
-- Why D is wrong: AWS Transfer Family provides managed SFTP/FTPS/FTP endpoints for file transfers into S3, but it is designed for external partner or client file exchanges, not for syncing on-premises NFS storage to S3. It does not support NFS as a source protocol.
-- Why E is wrong: S3 Transfer Acceleration speeds up uploads to S3 over the internet using CloudFront edge locations, but it still requires a manual or custom upload process. It does not provide scheduled incremental sync, change detection, or native NFS integration like DataSync does.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct</span><span class="exp-text">AWS DataSync is purpose-built for automated, incremental data transfer between on-premises NFS storage and Amazon S3. It supports scheduled tasks that transfer only changed data, uses parallelism and network optimizations to maximize throughput over Direct Connect or internet, handles encryption in transit, and integrates natively with NFS. This makes it ideal for keeping an S3-based ML data lake synchronized with on-premises storage.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Snowmobile is designed for exabyte-scale one-time migrations (up to 100 PB per truck). It is massive overkill for 5 TB of weekly incremental data and introduces days of logistics latency per transfer.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">A custom S3 PutObject script lacks built-in incremental detection, parallel transfer optimization, bandwidth throttling, automatic retry, and data integrity verification that DataSync provides out of the box. It also increases operational burden.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">AWS Transfer Family provides managed SFTP/FTPS/FTP endpoints for file transfers into S3, but it is designed for external partner or client file exchanges, not for syncing on-premises NFS storage to S3. It does not support NFS as a source protocol.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why E is wrong</span><span class="exp-text">S3 Transfer Acceleration speeds up uploads to S3 over the internet using CloudFront edge locations, but it still requires a manual or custom upload process. It does not provide scheduled incremental sync, change detection, or native NFS integration like DataSync does.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -556,10 +562,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why C is correct: AWS Cost Explorer provides historical cost and usage analysis, allowing the team to identify spending trends by service and instance type. This data-driven approach helps determine the right commitment level for a Compute Savings Plan, which provides discounts (up to 66%) across any instance family, size, OS, tenancy, or AWS Region — ideal when instance types change frequently.
-- Why A is wrong: SageMaker AI does not offer Reserved Instances for training. Reserved Instances are an Amazon EC2 pricing model. SageMaker AI training uses On-Demand or Managed Spot Training. Even if available, committing to specific instance types contradicts the requirement for flexibility.
-- Why B is wrong: Using On-Demand pricing exclusively is the most expensive option. Manual spreadsheet tracking provides no automated insights or recommendations and does not reduce costs.
-- Why D is wrong: AWS Trusted Advisor provides cost optimization recommendations (such as identifying underutilized resources), but it does not automatically purchase Savings Plans. Savings Plans must be purchased manually through the AWS Cost Management console or API.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why C is correct</span><span class="exp-text">AWS Cost Explorer provides historical cost and usage analysis, allowing the team to identify spending trends by service and instance type. This data-driven approach helps determine the right commitment level for a Compute Savings Plan, which provides discounts (up to 66%) across any instance family, size, OS, tenancy, or AWS Region — ideal when instance types change frequently.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">SageMaker AI does not offer Reserved Instances for training. Reserved Instances are an Amazon EC2 pricing model. SageMaker AI training uses On-Demand or Managed Spot Training. Even if available, committing to specific instance types contradicts the requirement for flexibility.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">Using On-Demand pricing exclusively is the most expensive option. Manual spreadsheet tracking provides no automated insights or recommendations and does not reduce costs.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">AWS Trusted Advisor provides cost optimization recommendations (such as identifying underutilized resources), but it does not automatically purchase Savings Plans. Savings Plans must be purchased manually through the AWS Cost Management console or API.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -573,10 +579,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct (C): Amazon Kinesis Video Streams is purpose-built for ingesting, storing, and processing real-time video streams from devices. It handles variable bandwidth through adaptive buffering, provides SDKs for camera integration, and supports integration with Amazon Rekognition, SageMaker, and custom consumers via the GetMedia and GetMediaForFragmentList APIs. This makes it the ideal choice for feeding live video into an ML pipeline.
-- Why A is wrong: AWS Elemental MediaLive is a broadcast-grade live video encoding service designed to create streams for delivery to viewers (e.g., via MediaPackage and CloudFront). It is not designed for ingesting device camera feeds into ML pipelines.
-- Why B is wrong: Amazon S3 is an object storage service. Uploading video to S3 introduces latency and does not support real-time streaming or frame-by-frame processing. It is suitable for batch processing, not real-time defect detection.
-- Why D is wrong: AWS Elemental MediaConvert is a file-based transcoding service that converts stored video files from one format to another. It does not support live stream ingestion.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct (C)</span><span class="exp-text">Amazon Kinesis Video Streams is purpose-built for ingesting, storing, and processing real-time video streams from devices. It handles variable bandwidth through adaptive buffering, provides SDKs for camera integration, and supports integration with Amazon Rekognition, SageMaker, and custom consumers via the GetMedia and GetMediaForFragmentList APIs. This makes it the ideal choice for feeding live video into an ML pipeline.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">AWS Elemental MediaLive is a broadcast-grade live video encoding service designed to create streams for delivery to viewers (e.g., via MediaPackage and CloudFront). It is not designed for ingesting device camera feeds into ML pipelines.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">Amazon S3 is an object storage service. Uploading video to S3 introduces latency and does not support real-time streaming or frame-by-frame processing. It is suitable for batch processing, not real-time defect detection.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">AWS Elemental MediaConvert is a file-based transcoding service that converts stored video files from one format to another. It does not support live stream ingestion.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -590,10 +596,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct (C): SageMaker Pipelines is the native ML workflow orchestration service within SageMaker. It supports defining pipeline steps (Processing, Training, Transform, Condition, Register), and offers built-in step caching that skips re-execution of unchanged steps. It integrates directly with SageMaker Model Registry for conditional model registration based on evaluation metrics.
-- Why A is wrong: Step Functions can orchestrate SageMaker jobs via API calls, but it is not native to the SageMaker ecosystem and does not support step caching for ML pipeline steps.
-- Why B is wrong: Amazon MWAA (Managed Workflows for Apache Airflow) can orchestrate SageMaker jobs using Airflow operators, but it is a general-purpose workflow tool, not native to SageMaker, and does not offer SageMaker-specific step caching.
-- Why D is wrong: AWS Glue workflows are designed for ETL orchestration, not end-to-end ML pipelines. They lack native integration with SageMaker training, evaluation, and model registration steps.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct (C)</span><span class="exp-text">SageMaker Pipelines is the native ML workflow orchestration service within SageMaker. It supports defining pipeline steps (Processing, Training, Transform, Condition, Register), and offers built-in step caching that skips re-execution of unchanged steps. It integrates directly with SageMaker Model Registry for conditional model registration based on evaluation metrics.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Step Functions can orchestrate SageMaker jobs via API calls, but it is not native to the SageMaker ecosystem and does not support step caching for ML pipeline steps.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why B is wrong</span><span class="exp-text">Amazon MWAA (Managed Workflows for Apache Airflow) can orchestrate SageMaker jobs using Airflow operators, but it is a general-purpose workflow tool, not native to SageMaker, and does not offer SageMaker-specific step caching.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">AWS Glue workflows are designed for ETL orchestration, not end-to-end ML pipelines. They lack native integration with SageMaker training, evaluation, and model registration steps.</span></div></div>
 </details>
 </div>
 <div class="q-card">
@@ -607,10 +613,10 @@ details summary { color: #60a5fa; font-weight: 600; font-size: 0.95rem; padding:
 </ul>
 <details>
 <summary>Show Explanation</summary>
-<div class="q-explain"><p>- Why correct (B): SMOTE generates realistic synthetic minority samples by interpolating between existing positive examples, class weights in the loss function penalize misclassification of the minority class more heavily, and stratified sampling ensures each training batch maintains the original class ratio. Together these address imbalance without information loss.
-- Why A is wrong: Collecting more negative samples worsens the imbalance. Increasing the learning rate and batch size are general training knobs that do not address class imbalance specifically.
-- Why C is wrong: Undersampling the majority class to only 5% of the dataset would discard 95% of available data, dramatically reducing the training set size and losing valuable patterns in the majority class.
-- Why D is wrong: Naive duplication of positive samples creates exact copies, which causes the model to overfit to those specific examples rather than learning generalizable patterns. SMOTE avoids this by creating interpolated synthetic samples instead of duplicates.</p></div>
+<div class="q-explain"><div class="q-explain-item correct-exp"><span class="exp-label">✓ Why correct (B)</span><span class="exp-text">SMOTE generates realistic synthetic minority samples by interpolating between existing positive examples, class weights in the loss function penalize misclassification of the minority class more heavily, and stratified sampling ensures each training batch maintains the original class ratio. Together these address imbalance without information loss.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why A is wrong</span><span class="exp-text">Collecting more negative samples worsens the imbalance. Increasing the learning rate and batch size are general training knobs that do not address class imbalance specifically.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why C is wrong</span><span class="exp-text">Undersampling the majority class to only 5% of the dataset would discard 95% of available data, dramatically reducing the training set size and losing valuable patterns in the majority class.</span></div>
+<div class="q-explain-item wrong-exp"><span class="exp-label">✗ Why D is wrong</span><span class="exp-text">Naive duplication of positive samples creates exact copies, which causes the model to overfit to those specific examples rather than learning generalizable patterns. SMOTE avoids this by creating interpolated synthetic samples instead of duplicates.</span></div></div>
 </details>
 </div>
 
